@@ -1,13 +1,13 @@
 <template>
     <img alt="Vue logo" src="./assets/logo.png">
     <!--    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>-->
-    {{ data.count }}
-    {{ data.double }}
-    <button @click="data.increase">增加</button>
+    {{ count }}
+    {{ double }}
+    <button @click="increase">增加</button>
 </template>
 
 <script lang="ts">
-import {computed, ref, reactive, defineComponent} from 'vue';
+import {computed, ref, reactive, defineComponent,toRefs} from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
 
 interface Idata {
@@ -39,9 +39,12 @@ export default defineComponent({
                 return data.count * 2
             })
         })
+
+        const refData = toRefs(data)
+
         return {
             hello,
-            data
+            ...refData
         }
     }
 });

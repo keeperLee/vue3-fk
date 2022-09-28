@@ -1,57 +1,37 @@
 <template>
     <img alt="Vue logo" src="./assets/logo.png">
     <!--    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>-->
-    {{ count }}
-    {{ double }}
-    <button @click="increase">增加</button>
+<!--    {{ count }}-->
+<!--    {{ double }}-->
+<!--    <button @click="increase">增加</button>-->
+    <h1>x:{{x}} , y: {{y}}</h1>
 </template>
 
 <script lang="ts">
-import {computed, ref, reactive, defineComponent, toRefs, onMounted, onUpdated} from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import { ref, defineComponent, onMounted, onUnmounted} from 'vue';
 
-interface Idata {
-    count: number,
-    double: number,
-    increase: () => void
-}
 
 export default defineComponent({
     name: 'App',
-    components: {
-        // HelloWorld
-    },
+    components: {},
     setup() {
-        // const count = ref(0)
-        // const double = computed(() => {
-        //     return count.value * 2
-        // })
-        // const increase = () => {
-        //     count.value++
-        // }
+        const x = ref(0)
+        const y = ref(0)
+        const updateMouse = (e:MouseEvent) =>{
+            x.value = e.pageX
+            y.value = e.pageY
+        }
+
         onMounted(() => {
-            console.log('onMounted')
+            document.addEventListener('click',updateMouse)
         })
 
-        onUpdated(()=>{
-            console.log('onUpdated')
+        onUnmounted(()=>{
+            document.removeEventListener('click',updateMouse)
         })
-        const hello = 'hello'
-        const data: Idata = reactive({
-            count: 0,
-            increase: () => {
-                data.count++
-            },
-            double: computed(() => {
-                return data.count * 2
-            })
-        })
-
-        const refData = toRefs(data)
 
         return {
-            hello,
-            ...refData
+            x,y
         }
     }
 });

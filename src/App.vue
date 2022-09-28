@@ -1,35 +1,17 @@
 <template>
     <img alt="Vue logo" src="./assets/logo.png">
-    <!--    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>-->
-<!--    {{ count }}-->
-<!--    {{ double }}-->
-<!--    <button @click="increase">增加</button>-->
     <h1>x:{{x}} , y: {{y}}</h1>
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, onMounted, onUnmounted} from 'vue';
-
+import { defineComponent} from 'vue';
+import useMousePosition from "@/hooks/useMousePosition";
 
 export default defineComponent({
     name: 'App',
     components: {},
     setup() {
-        const x = ref(0)
-        const y = ref(0)
-        const updateMouse = (e:MouseEvent) =>{
-            x.value = e.pageX
-            y.value = e.pageY
-        }
-
-        onMounted(() => {
-            document.addEventListener('click',updateMouse)
-        })
-
-        onUnmounted(()=>{
-            document.removeEventListener('click',updateMouse)
-        })
-
+        const {x,y} = useMousePosition()
         return {
             x,y
         }

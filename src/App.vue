@@ -1,19 +1,20 @@
 <template>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <h1>x:{{x}} , y: {{y}}</h1>
+<!--    <img alt="Vue logo" src="./assets/logo.png">-->
+    <h1 v-if="loading">Loading!.....</h1>
+    <img v-if="loaded" :src="result.message" >
 </template>
 
 <script lang="ts">
 import { defineComponent} from 'vue';
-import useMousePosition from "@/hooks/useMousePosition";
 
+import useURLLoader from "@/hooks/useURLLoader";
 export default defineComponent({
     name: 'App',
     components: {},
     setup() {
-        const {x,y} = useMousePosition()
+        const {result,loading,loaded,error} = useURLLoader('https://dog.ceo/api/breeds/image/random')
         return {
-            x,y
+            result,loading,loaded,error
         }
     }
 });

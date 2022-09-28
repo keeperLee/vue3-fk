@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import {computed, ref, reactive, defineComponent,toRefs} from 'vue';
+import {computed, ref, reactive, defineComponent, toRefs, onMounted, onUpdated} from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
 
 interface Idata {
@@ -29,8 +29,15 @@ export default defineComponent({
         // const increase = () => {
         //     count.value++
         // }
+        onMounted(() => {
+            console.log('onMounted')
+        })
+
+        onUpdated(()=>{
+            console.log('onUpdated')
+        })
         const hello = 'hello'
-        const data:Idata = reactive({
+        const data: Idata = reactive({
             count: 0,
             increase: () => {
                 data.count++

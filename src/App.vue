@@ -1,18 +1,36 @@
 <template>
-<!--    <img alt="Vue logo" src="./assets/logo.png">-->
     <h1 v-if="loading">Loading!.....</h1>
-    <img v-if="loaded" :src="result.message" >
+<!--    <img v-if="loaded" :src="result.message" >-->
+    <img v-if="loaded" :src="result[0].url" >
 </template>
 
 <script lang="ts">
-import { defineComponent} from 'vue';
-
+import { defineComponent,watch} from 'vue';
 import useURLLoader from "@/hooks/useURLLoader";
+
+interface DogResult {
+    message:string,
+    status:string
+}
+
+interface CatResult{
+    id:string,
+    url:string,
+    width:number,
+    height:number
+}
 export default defineComponent({
     name: 'App',
     components: {},
     setup() {
-        const {result,loading,loaded,error} = useURLLoader('https://dog.ceo/api/breeds/image/random')
+        // const {result,loading,loaded,error} = useURLLoader<DogResult>('https://dog.ceo/api/breeds/image/random')
+        const {result,loading,loaded,error} = useURLLoader<CatResult[]>('https://api.thecatapi.com/v1/images/search')
+
+        watch(result,()=>{
+            if(result.value){
+                console.log('value',result.value[0])
+            }
+        })
         return {
             result,loading,loaded,error
         }

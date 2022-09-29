@@ -1,17 +1,24 @@
 <template>
     <div class="message">
-        <h1>{{text}}</h1>
+        <h1>{{}}</h1>
         <button @click="onChange">发送自定义事件</button>
     </div>
 </template>
 
 <script setup lang="ts">
 import {defineProps ,defineEmits} from "vue";
-const props = defineProps({text:String})
 
-const emit = defineEmits(['change','focus'])
+interface IUser {
+    name:string;
+    age:number
+}
+interface IEvents{
+    (e:'change',age:number) : void
+}
+const props = defineProps<{user:IUser}>()
+const emit = defineEmits<IEvents>()
 const onChange =  ()=>{
-    emit('change',props.text)
+    emit('change',props.user.age)
 }
 </script>
 

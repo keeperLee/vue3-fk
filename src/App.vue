@@ -14,6 +14,8 @@
         </template>
     </Suspense>
     <button @click="openModal">Open Modal</button>
+    <button @click="changeLang('en')">英文</button>
+    <button @click="changeLang('ch')">中文</button>
     <Modal :is-open="modalIsOpen" @close-modal='onModalClose'>MY MODAL!!!</Modal>
     <img v-if="loaded" :src="result[0].url" alt="">
     <p>{{errorCaptured}}</p>
@@ -47,12 +49,18 @@ export default defineComponent({
     },
     setup() {
         //provide提供数据
-        provide('lang','ch')
+        const lang  = ref('en')
+        provide('lang',lang)
+        const changeLang = (type:string) =>{
+            lang.value = type
+        }
+
         const errorCaptured = ref(null)
         onErrorCaptured((e:any)=>{
             errorCaptured.value = e
             return true
         })
+
         // const {result,loading,loaded,error} = useURLLoader<DogResult>('https://dog.ceo/api/breeds/image/random')
         const {result, loading, loaded, error} = useURLLoader<CatResult[]>('https://api.thecatapi.com/v1/images/search')
 
@@ -70,7 +78,7 @@ export default defineComponent({
             modalIsOpen.value = false
         }
         return {
-            result, loading, loaded, error, modalIsOpen, openModal, onModalClose,errorCaptured
+            result, loading, loaded, error, modalIsOpen, openModal, onModalClose,errorCaptured,changeLang
         }
     }
 });

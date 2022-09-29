@@ -1,6 +1,14 @@
 <template>
     <h1 v-if="loading">Loading!.....</h1>
 <!--    <img v-if="loaded" :src="result.message" >-->
+    <Suspense>
+        <template #default>
+            <AsyncShow></AsyncShow>
+        </template>
+        <template #fallback>
+            <h1>Suspense loading</h1>
+        </template>
+    </Suspense>
     <button @click="openModal">Open Modal</button>
     <Modal :is-open="modalIsOpen" @close-modal = 'onModalClose'>MY MODAL!!!</Modal>
     <img v-if="loaded" :src="result[0].url" >
@@ -10,6 +18,7 @@
 import { defineComponent,watch,ref} from 'vue';
 import useURLLoader from "@/hooks/useURLLoader";
 import Modal from "@/components/Modal.vue";
+import AsyncShow from '@/components/AsyncShow.vue'
 interface DogResult {
     message:string,
     status:string
@@ -23,7 +32,7 @@ interface CatResult{
 }
 export default defineComponent({
     name: 'App',
-    components: {Modal},
+    components: {Modal,AsyncShow},
     setup() {
         // const {result,loading,loaded,error} = useURLLoader<DogResult>('https://dog.ceo/api/breeds/image/random')
         const {result,loading,loaded,error} = useURLLoader<CatResult[]>('https://api.thecatapi.com/v1/images/search')

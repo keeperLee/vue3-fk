@@ -4,6 +4,7 @@
             <h2><slot>this is a modal</slot></h2>
             <button @click="btnClick">Close</button>
             <h2>lang:{{lang}}</h2>
+            <h2>currentUser:{{currentUser.name}}</h2>
         </div>
     </teleport>
 </template>
@@ -23,11 +24,13 @@ export default defineComponent({
 
         //inject拿到provide提供的数据
         const lang = inject('lang')
+        const currentUser = inject<{name:string}>('currentUser')
         const btnClick = ()=>{
             context.emit('closeModal')
         }
         return {
             lang,
+            currentUser,
             btnClick
         }
     }

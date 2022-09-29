@@ -1,13 +1,14 @@
 <template>
     <h1 v-if="loading">Loading!.....</h1>
 <!--    <img v-if="loaded" :src="result.message" >-->
+    <Modal/>
     <img v-if="loaded" :src="result[0].url" >
 </template>
 
 <script lang="ts">
 import { defineComponent,watch} from 'vue';
 import useURLLoader from "@/hooks/useURLLoader";
-
+import Modal from "@/components/Modal.vue";
 interface DogResult {
     message:string,
     status:string
@@ -21,7 +22,7 @@ interface CatResult{
 }
 export default defineComponent({
     name: 'App',
-    components: {},
+    components: {Modal},
     setup() {
         // const {result,loading,loaded,error} = useURLLoader<DogResult>('https://dog.ceo/api/breeds/image/random')
         const {result,loading,loaded,error} = useURLLoader<CatResult[]>('https://api.thecatapi.com/v1/images/search')

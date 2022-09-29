@@ -3,12 +3,13 @@
         <div id="center" v-if="isOpen">
             <h2><slot>this is a modal</slot></h2>
             <button @click="btnClick">Close</button>
+            <h2>lang:{{lang}}</h2>
         </div>
     </teleport>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent,inject} from "vue";
 
 export default defineComponent({
     name: "Modal",
@@ -19,10 +20,14 @@ export default defineComponent({
       'closeModal' : null
     },
     setup(props,context){
+
+        //inject拿到provide提供的数据
+        const lang = inject('lang')
         const btnClick = ()=>{
             context.emit('closeModal')
         }
         return {
+            lang,
             btnClick
         }
     }

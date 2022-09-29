@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, watch, ref ,onErrorCaptured} from 'vue';
+import {provide,defineComponent, watch, ref ,onErrorCaptured} from 'vue';
 import useURLLoader from "@/hooks/useURLLoader";
 import Modal from "@/components/Modal.vue";
 import AsyncShow from '@/components/AsyncShow.vue'
@@ -46,6 +46,8 @@ export default defineComponent({
         DogShow
     },
     setup() {
+        //provide提供数据
+        provide('lang','ch')
         const errorCaptured = ref(null)
         onErrorCaptured((e:any)=>{
             errorCaptured.value = e

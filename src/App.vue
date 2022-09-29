@@ -1,12 +1,13 @@
 <template>
     <h1 v-if="loading">Loading!.....</h1>
 <!--    <img v-if="loaded" :src="result.message" >-->
-    <Modal/>
+    <button @click="openModal">Open Modal</button>
+    <Modal :is-open="modalIsOpen" @close-modal = 'onModalClose'>MY MODAL!!!</Modal>
     <img v-if="loaded" :src="result[0].url" >
 </template>
 
 <script lang="ts">
-import { defineComponent,watch} from 'vue';
+import { defineComponent,watch,ref} from 'vue';
 import useURLLoader from "@/hooks/useURLLoader";
 import Modal from "@/components/Modal.vue";
 interface DogResult {
@@ -32,8 +33,17 @@ export default defineComponent({
                 console.log('value',result.value[0])
             }
         })
+
+
+        const modalIsOpen = ref(false)
+        const openModal = ()=>{
+            modalIsOpen.value = true
+        }
+        const onModalClose = ()=>{
+            modalIsOpen.value = false
+        }
         return {
-            result,loading,loaded,error
+            result,loading,loaded,error,modalIsOpen,openModal,onModalClose
         }
     }
 });

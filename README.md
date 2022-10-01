@@ -1,11 +1,15 @@
-# vue3-fk
+## vue3-fk
 
-## Project setup
-```
-npm install
-```
+### Vue3常用特性回顾
 
-### 安装axios
-```
-npm install axios --save
-```
+#### 1.ref,reactive
+#### 2.toRefS,computed,watch
+#### 3.hooks编程范式
+#### 4.props,emit
+#### 5.teleport,suspense
+#### 6.provide,inject
+#### 7.setup语法糖,definePops,defineEmits
+
+
+### Vue3官网
+https://cn.vuejs.org/guide/introduction.html
